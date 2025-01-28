@@ -1,0 +1,48 @@
+{
+    "c97c14ce-5936-428f-95b0-1347fa2bd056": {
+        "key": "name",
+        "data": "What is your name?",
+        "next": "aaffec5f-49a4-4795-af7f-432b8b16371a",
+        "prompt": "Let's get started!",
+        "prev": null
+    },
+    "aaffec5f-49a4-4795-af7f-432b8b16371a": {
+        "key": "dateOfBirth",
+        "data": "What is your date of birth?",
+        "next": "c125388e-b571-4511-97c6-d914606a5b5d",
+        "prev": "c97c14ce-5936-428f-95b0-1347fa2bd056",
+        "prompt": "Tell us about you"
+    },
+    "c125388e-b571-4511-97c6-d914606a5b5d": {
+        "key": "gender",
+        "data": "What is your gender?",
+        "next": "358b122b-37c2-4dcd-8adf-a31c75a89bd3",
+        "prev": "aaffec5f-49a4-4795-af7f-432b8b16371a",
+        "prompt": "More about you"
+    },
+    "4da4e4b5-f95e-4ccb-b40d-158f33d44dd2": {
+        "key": "location",
+        "data": "Select your Location",
+        "next": "c6f3554f-3f3b-42a5-b178-9b21415008d8",
+        "prev": "358b122b-37c2-4dcd-8adf-a31c75a89bd3",
+        "prompt": null
+    },
+    "358b122b-37c2-4dcd-8adf-a31c75a89bd3" : {
+        "key": "status",
+        "prompt": "What are you looking for?",
+        "options": [
+            {"id": 1, "option": "Looking for new friends"}, {"id":2, "option":"I am a new mom, I need help"}, {"id":3, "option": "Let's take dogs for a walk"}, {"id":4, "option": "Let's be friends, I am new in town"}, {"id":5, "option": "My plans are to move abroad"}, {"id": 6, "option": "I am looking for emotional support"}, {"id": 7, "option": "I am learning a new language. Let's talk!"}
+        ],
+        "next": "4da4e4b5-f95e-4ccb-b40d-158f33d44dd2",
+        "prev": "c125388e-b571-4511-97c6-d914606a5b5d",
+        "data": "This will be your status. You can always change it. Please choose 3 statuses maximum"
+    },
+    "c6f3554f-3f3b-42a5-b178-9b21415008d8": {
+        "key": "images",
+        "data": "Upload at least 1 image",
+        "next": null,
+        "prev": "4da4e4b5-f95e-4ccb-b40d-158f33d44dd2",
+        "prompt": null
+    }
+
+}
