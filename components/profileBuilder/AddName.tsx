@@ -1,8 +1,7 @@
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, Text } from "react-native";
 import { useEffect, useState } from "react";
 
 import Data from "../Data";
-import ErrorIndicator from "../ErrorIndicator";
 import Prompt from "../Prompt";
 import { Step } from "../../types/Step";
 import { TextInput } from "react-native-paper";
@@ -17,27 +16,13 @@ type AddNameProps = {
   saveInput: (value: string, action: string) => void;
 };
 
-const WRONG_INPUT_ERROR_MESSAGE =
-  "Invalid name. Please, don't use numbers, special characters or rude words";
-const INPUT_LENGTH_ERROR_MESSAGE =
-  "This field must contain between 2 and 15 characters";
-
-const NAME_REGEX: RegExp =
-  /^\s*(?:(?!\s\s)[\p{L}'-]{2,}|[\p{L}'-]\s[\p{L}'-]+)(?:\s[\p{L}'-]+)?\s*$/u;
-
-// /^\s*(?:(?!\s\s)[\p{L}'-]{2,}(?:\s[\p{L}'-]+)?){1,15}\s*$/u
+const NAME_REGEX: RegExp = /^[\p{L} ]{2,15}$/u;
 
 const AddName = (props: AddNameProps) => {
   const [name, setName] = useState<string>("");
-  const [initialName, setInitialName] = useState<string | undefined>(
-    props.name
-  );
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [initialName, setInitialName] = useState<string | undefined>(props.name);
   const [isInputValidated, setIsInputValidated] = useState<boolean>(false);
   const [orientation, setOrientation] = useState<number>(1);
-
-  //(/^[a-zA-Z\u00C0-\u00FF\u0100-\u017F\u0180-\u024F ']+(?:-[a-zA-Z\u00C0-\u00FF\u0100-\u017F\u0180-\u024F ']+){0,14}$/
-  //.test(value))
 
   useEffect(() => {
     if (props.name) {
@@ -53,11 +38,9 @@ const AddName = (props: AddNameProps) => {
   };
 
   const onSubmit = (action: string) => {
-    if (NAME_REGEX.test(name.trim() as string)) {
+    if (isInputValidated) {
       handlePress(action);
-      setErrorMessage("");
-    } else {
-      setErrorMessage(WRONG_INPUT_ERROR_MESSAGE);
+      setIsInputValidated(false);
     }
   };
 
@@ -70,17 +53,12 @@ const AddName = (props: AddNameProps) => {
   };
 
   const handleInput = (value: string) => {
-    if (value.trim().length < 2) {
-      setIsInputValidated(false);
-      setErrorMessage(INPUT_LENGTH_ERROR_MESSAGE);
-    } else if (NAME_REGEX.test(value.trim())) {
+    const trimmedValue = value.trim();
+    if (trimmedValue.length >= 2 && NAME_REGEX.test(trimmedValue)) {
       setIsInputValidated(true);
-      setErrorMessage("");
     } else {
       setIsInputValidated(false);
-      setErrorMessage(WRONG_INPUT_ERROR_MESSAGE);
     }
-
     setName(value);
   };
 
@@ -110,11 +88,20 @@ const AddName = (props: AddNameProps) => {
             onChangeText={handleInput}
           />
         </View>
-        <View style={styles.error}>
-          {errorMessage ? (
-            <ErrorIndicator color={"#F1562A"} errorMessage={errorMessage} />
-          ) : null}
-        </View>
+        {isInputValidated === false && (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorTitle}>Your name</Text>
+            <Text style={styles.errorText}>
+              - shouldn't contain numbers
+            </Text>
+            <Text style={styles.errorText}>
+              - has 2-15 symbols
+            </Text>
+            <Text style={styles.errorText}>
+              - has no special characters
+            </Text>
+          </View>
+        )}
         <View style={{ marginTop: 5 }}>
           <NextStepButton
             isInputValidated={isInputValidated}
@@ -141,9 +128,27 @@ const styles = StyleSheet.create({
     textAlign: "center",
     borderRadius: 5,
   },
-  error: {
+  errorContainer: {
+    borderRadius: 10,
+    height: 130,
     width: 300,
-    marginTop: 5,
+    marginTop: 15,
+    marginBottom: 50,
+    paddingTop: 17,
+    paddingLeft: 23,
+    boxShadow: '0 0 5px 0 #d9d9d9',
+    backgroundColor: '#fff',
+  },
+  errorTitle: {
+    fontWeight: 500,
+    fontSize: 14,
+    marginBottom: 20,
+    color: '#f1562a',
+  },
+  errorText: {
+    fontWeight: 500,
+    fontSize: 12,
+    color: '#f1562a',
   },
 });
 
